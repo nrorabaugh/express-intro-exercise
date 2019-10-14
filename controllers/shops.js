@@ -1,50 +1,34 @@
-/* Step 1 import express
- *
- */
 const express = require('express')
 
-/* Step 2
- *
- * Import the api files from the models
- *
- * TODO: change the file path to the models file you'll need to use.
- * TODO: rename this from `templateApi` to something more sensible (e.g:
- * `shopsAPI`)
- *
- * NOTE: You may need to import more than one API to create the 
- * controller you need.
- * 
- */
-const templateApi = require('../models/template.js')
+const shopsApi = require('../models/shops.js')
 
-/* Step 3 
- * 
- * Create a new router.
- *
- * the router will "contain" all the request handlers that you define in this file.
- * TODO: rename this from templateRouter to something that makes sense. (e.g:
- * `shopRouter`)
- */
-const templateRouter = express.Router()
+const shopsRouter = express.Router()
 
-/* Step 4
- * 
- * TODO: Put all request handlers here
- */
-
-/* Step 5
- *
- * TODO: delete this handler; it's just a sample
- */ 
-templateRouter.get('/', (req, res) => {
-  res.send(templateApi.getHelloWorldString())
+shopsRouter.get('/shops', (req, res) => {
+  res.json(shopsApi.getShops())
 })
 
-/* Step 6
- *
- * Export the router from the file.
- *
- */
+shopsRouter.post('/shops/new/:obj', (req, res) => {
+  res.json(shopsApi.createShop(req.params.obj))
+})
+
+shopsRouter.post('/shops/add/:shop', (req, res) => {
+  res.json(shopsApi.addShop(req.params.shop))
+})
+
+shopsRouter.put('/shops/update/:index', (req, res) => {
+  res.json(shopsApi.updateShop(req.params.index, req.body))
+})
+
+shopsRouter.delete('/shops/delete/:index', (req, res) => {
+  res.json(shopsApi.deleteShop(req.params.index))
+})
+
+shopsRouter.get('/shops/:index', (req, res) => {
+  let index = req.params.index
+  res.json(getShop(index))
+})
+
 module.exports = {
-  templateRouter
+  shopsRouter
 }

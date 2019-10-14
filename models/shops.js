@@ -1,6 +1,3 @@
-const express = require('express')
-const app = express()
-
 const shops = [
   {
     name: "Starbucks",
@@ -17,37 +14,45 @@ const shops = [
     employees: 9,
     currentlyOpen: false
   }
-];
+]
 
-let getShops = function() {
+let getShops = () => {
   return shops
 }
 
-let getShop = function(index) {
+let getShop = (index) => {
   return shops[index]
 }
 
-let createShop = function() {
-  let newShop = {
-    name: "shopName",
-    employees: 20,
-    currentlyOpen: false
-  }  
+let newShop = {}
+
+let createShop = (obj) => {
+  newShop = obj
   return newShop
 }
 
-app.get('/shops', (req, res) => {
-  res.send(getShops())
-})
+let addShop = (shop) => {
+  shops.push(shop)
+  return shops
+}
 
-app.get('/shops/new', (req, res) => {
-  res.send(createShop())
-})
+let updateShop = (index, shop) => {
+  shops[index] = shop
+  return shops
+}
 
-app.get('/shops/:index', (req, res) => {
-  let index = req.params.index
-  res.send(getShop(index))
-})
+let deleteShop = (index) => {
+  shops.splice(index, 1)
+  return shops
+}
 
-app.listen(3000)
+module.exports = {
+  getShops,
+  getShop,
+  newShop,
+  createShop,
+  addShop,
+  updateShop,
+  deleteShop
+}
 
